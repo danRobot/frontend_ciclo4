@@ -1,6 +1,6 @@
 let register = document.getElementById("register");
 let errorModal = document.getElementById("myModal");
-let domain = "http://localhost:8080";
+let domain = "http://155.248.209.25:8080";
 let textModal = document.getElementById('textModal');
 let tables = new Map();
 tables.set("users", domain + "/api/user/");
