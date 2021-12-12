@@ -7,32 +7,38 @@ tables.set("users", domain + "/api/user/");
 
 let ajax = new AJAX(tables);
 
-function callback(object, params) {
-    console.log("name", object[0].name);
-}
-function redirect(object,params) {
-    if(object===null){
-        textModal.textContent='Usuario no validdo'
+function registerCllbck(response,params) {
+    console.log("Respuesta",response);
+    if(response===null){
+        textModal.textContent='Usuario ya esta registrado'
         $('#exampleModal').modal('show');
     }else{
-        textModal.textContent='Bienvenido '+object.name
+        textModal.textContent='Usuario '+response.name+" creado";
         $('#exampleModal').modal('show');
     }
 }
-register.onclick = () => {
-    window.location.replace("action.html");
-    //ajax.read("users", callback, "all", "");
-};
 
 function logSubmit(event) {
     //log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
-    var email=event.target[0].value;
+    /*var email=event.target[0].value;
     var password=event.target[1].value;
     var endpoint=email+'/'+password
     if(email!==''&&password!==''){
         ajax.read('users',redirect,endpoint,'')
     }else{
         textModal.textContent='Ingrese datos validos'
+        $('#exampleModal').modal('show');
+    }
+    event.preventDefault();*/
+    var email = event.target[0].value;
+    var name = event.target[1].value;
+    var password = event.target[2].value;
+    if (email !== '' && password !== '' && name !== '') {
+        var user={"email":email,"name":name,'password':password};
+        ajax.write("POST","users",JSON.stringify(user),registerCllbck,"new","");
+        //ajax.read('users', redirect, endpoint, '')
+    } else {
+        textModal.textContent = 'Ingrese datos validos'
         $('#exampleModal').modal('show');
     }
     event.preventDefault();

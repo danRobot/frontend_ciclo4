@@ -38,6 +38,7 @@ class AJAX{
             }
         }
         try {
+            console.log(content);
             this.xmlreq.send(content);
         } catch (error) {
             console.log(error);
